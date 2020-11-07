@@ -15,22 +15,26 @@ public class Controller {
     ConsoleView view;
     Player player1;
     Player player2;
-
+    String s;
+    Move whiteMove;
 
     public Controller() {
         scanner = new Scanner(System.in);
         model = new Model();
         view = new ConsoleView();
+        s = "";
     }
 
     public void init() {
         initBlackHolePos();
         initPlayers();
+
         startGameLoop();
     }
 
     private void initBlackHolePos() {
         String blackHolePos = scanner.nextLine();
+        s += blackHolePos;
         Move blackHole = stringToMove(blackHolePos);
         model.setBlackHole(blackHole);
     }
@@ -39,7 +43,9 @@ public class Controller {
         PlayerColour player1Colour;
         PlayerColour player2Colour;
         String player1ColourString = scanner.nextLine();
+        s += " " + player1ColourString;
         if(player1ColourString.equals("white")) {
+            whiteMove = stringToMove(scanner.nextLine());
             player1Colour = PlayerColour.WHITE;
             player2Colour = PlayerColour.BLACK;
         }
@@ -53,16 +59,26 @@ public class Controller {
     }
 
     private void startGameLoop() {
+//        String whiteMove = scanner.next();
+//        s += " " + whiteMove;
         Move nextMove;
+//        System.out.println(s);
+//        while (player1.hasPossibleMoves() || player2.hasPossibleMoves()) {
         while (true) {
             if (model.getCurrentPlayer() == player1.getPlayerColour()) {
                 nextMove = player1.getNextMove();
                 System.out.println(moveToString(nextMove));
             } else {
-                nextMove = player2.getNextMove();
+                if(whiteMove != null) {
+                    nextMove = whiteMove;
+                    whiteMove = null;
+                }
+                else nextMove = player2.getNextMove();
+//                System.out.println(nextMove);
             }
             model.placeDisc(nextMove);
         }
+
     }
 
     private Move stringToMove(String line) {
@@ -71,7 +87,7 @@ public class Controller {
     }
 
     private String moveToString(Move move) {
-        if(move == null) return "pass";
+        if (move == null) return "pass";
         String s = "";
         char row = (char)move.getRow();
         row += '1';

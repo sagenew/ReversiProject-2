@@ -21,7 +21,10 @@ public class UserPlayer implements Player {
 
     @Override
     public Move getNextMove() {
-        String moveString = scanner.nextLine();
+        String moveString = "";
+        while (moveString.equals("")) {
+            moveString = scanner.nextLine();
+        }
         if(moveString.equals("pass")) return null;
         return new Move(moveString.charAt(1) - '1', moveString.charAt(0) - 'A');
     }
