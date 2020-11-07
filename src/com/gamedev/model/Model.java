@@ -11,6 +11,7 @@ public class Model {
     private int[][] board;
     private PlayerColour currentPlayer;
     private final int BOARD_SIZE = 8;
+    private final int BLACK_HOLE = 4;
     public Model() {
         initGame();
         currentPlayer = PlayerColour.BLACK;
@@ -111,20 +112,20 @@ public class Model {
         while (true) {
             x += directionX;
             y += directionY;
-            if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE || board[x][y] == 0) break;
+            if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE || board[x][y] == 0 || board[x][y] == BLACK_HOLE) break;
             if (board[x][y] == playerDisc) return true;
         }
         return false;
     }
 
     public void setBlackHole(Move blackHole) {
-        board[blackHole.getRow()][blackHole.getCol()] = 4;
+        board[blackHole.getRow()][blackHole.getCol()] = BLACK_HOLE;
     }
 
     public Move getBlackHole() {
         for(int i = 0; i < BOARD_SIZE; i++)
             for (int j = 0; j < BOARD_SIZE; j++)
-                if (board[i][j] == 4) return new Move(i,j);
+                if (board[i][j] == BLACK_HOLE) return new Move(i,j);
                 return null;
     }
 

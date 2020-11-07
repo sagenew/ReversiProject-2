@@ -63,8 +63,8 @@ public class Controller {
 //        s += " " + whiteMove;
         Move nextMove;
 //        System.out.println(s);
-//        while (player1.hasPossibleMoves() || player2.hasPossibleMoves()) {
-        while (true) {
+        while (player1.hasPossibleMoves() || player2.hasPossibleMoves()) {
+//        while (true) {
             if (model.getCurrentPlayer() == player1.getPlayerColour()) {
                 nextMove = player1.getNextMove();
                 System.out.println(moveToString(nextMove));

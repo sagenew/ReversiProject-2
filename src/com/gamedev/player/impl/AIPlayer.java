@@ -28,8 +28,9 @@ public class AIPlayer implements Player {
     private Move getRandomPossibleMove() {
         ArrayList<Move> movesList = new ArrayList<>(model.getPossibleMoves(getPlayerColour()));
         if (movesList.isEmpty()) return null;
-        int randomIndex = (int)(Math.random() * movesList.toArray().length);
-        return movesList.get(randomIndex);
+//        int randomIndex = (int)(Math.random() * movesList.toArray().length);
+//        return movesList.get(randomIndex);
+        return movesList.get(0);
     }
 
     @Override
