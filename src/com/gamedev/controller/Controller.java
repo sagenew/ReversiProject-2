@@ -59,12 +59,8 @@ public class Controller {
     }
 
     private void startGameLoop() {
-//        String whiteMove = scanner.next();
-//        s += " " + whiteMove;
         Move nextMove;
-//        System.out.println(s);
-        while (player1.hasPossibleMoves() || player2.hasPossibleMoves()) {
-//        while (true) {
+        while (true) {
             if (model.getCurrentPlayer() == player1.getPlayerColour()) {
                 nextMove = player1.getNextMove();
                 System.out.println(moveToString(nextMove));
@@ -74,7 +70,6 @@ public class Controller {
                     whiteMove = null;
                 }
                 else nextMove = player2.getNextMove();
-//                System.out.println(nextMove);
             }
             model.placeDisc(nextMove);
         }
