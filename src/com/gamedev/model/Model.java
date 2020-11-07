@@ -29,14 +29,16 @@ public class Model {
     }
 
     public void placeDisc(Move move) {
-        int playerDisc = currentPlayer == PlayerColour.BLACK ? 2 : 1;
-        int opponentDisc = currentPlayer == PlayerColour.BLACK ? 1 : 2;
-        board[move.getRow()][move.getCol()] = playerDisc;
+        if(move != null) {
+            int playerDisc = currentPlayer == PlayerColour.BLACK ? 2 : 1;
+            int opponentDisc = currentPlayer == PlayerColour.BLACK ? 1 : 2;
+            board[move.getRow()][move.getCol()] = playerDisc;
 
-        int[] directionsX = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] directionsY = {-1, 0, 1, -1, 1, -1, 0, 1};
-        for (int i = 0; i < directionsX.length; i++) {
-            flipDiscsInDirection(playerDisc, opponentDisc, move, directionsX[i], directionsY[i]);
+            int[] directionsX = {-1, -1, -1, 0, 0, 1, 1, 1};
+            int[] directionsY = {-1, 0, 1, -1, 1, -1, 0, 1};
+            for (int i = 0; i < directionsX.length; i++) {
+                flipDiscsInDirection(playerDisc, opponentDisc, move, directionsX[i], directionsY[i]);
+            }
         }
         changeCurrentPlayer();
     }
@@ -74,8 +76,9 @@ public class Model {
     }
 
     private void changeCurrentPlayer() {
-        if (currentPlayer == PlayerColour.BLACK) currentPlayer = PlayerColour.WHITE;
-        else currentPlayer = PlayerColour.BLACK;
+        currentPlayer = currentPlayer == PlayerColour.BLACK
+                ? PlayerColour.WHITE
+                : PlayerColour.BLACK;
     }
 
     public Set<Move> getPossibleMoves(PlayerColour player) {

@@ -71,6 +71,7 @@ public class Controller {
     }
 
     private String moveToString(Move move) {
+        if(move == null) return "pass";
         String s = "";
         char row = (char)move.getRow();
         row += '1';
