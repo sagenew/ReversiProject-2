@@ -11,6 +11,10 @@ public class Model {
     private int[][] board;
     private PlayerColour currentPlayer;
     private final int BOARD_SIZE = 8;
+    private final int EMPTY_DISC = 0;
+    private final int WHITE_DISC = 1;
+    private final int BLACK_DISC = 2;
+    private final int POSSIBLE_MOVE = 3;
     private final int BLACK_HOLE = 4;
     public Model() {
         initGame();
@@ -23,16 +27,16 @@ public class Model {
     }
 
     private void placeStartDiscs() {
-        board[3][3] = 1;
-        board[3][4] = 2;
-        board[4][3] = 2;
-        board[4][4] = 1;
+        board[3][3] = WHITE_DISC;
+        board[3][4] = BLACK_DISC;
+        board[4][3] = BLACK_DISC;
+        board[4][4] = WHITE_DISC;
     }
 
     public void placeDisc(Move move) {
         if(move != null) {
-            int playerDisc = currentPlayer == PlayerColour.BLACK ? 2 : 1;
-            int opponentDisc = currentPlayer == PlayerColour.BLACK ? 1 : 2;
+            int playerDisc = currentPlayer == PlayerColour.BLACK ? BLACK_DISC : WHITE_DISC;
+            int opponentDisc = currentPlayer == PlayerColour.BLACK ? WHITE_DISC : BLACK_DISC;
             board[move.getRow()][move.getCol()] = playerDisc;
 
             int[] directionsX = {-1, -1, -1, 0, 0, 1, 1, 1};
@@ -84,11 +88,11 @@ public class Model {
 
     public Set<Move> getPossibleMoves(PlayerColour player) {
         Set<Move> moves = new HashSet<>();
-        int playerDisc = (player == PlayerColour.BLACK) ? 2 : 1;
-        int opponentDisc = (player == PlayerColour.BLACK) ? 1 : 2;
+        int playerDisc = (player == PlayerColour.BLACK) ? BLACK_DISC : WHITE_DISC;
+        int opponentDisc = (player == PlayerColour.BLACK) ? WHITE_DISC : BLACK_DISC;
         for (int row = 0; row < BOARD_SIZE; row++)
             for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] != 0) continue;
+                if (board[row][col] != EMPTY_DISC) continue;
 
                 int[] directionsX = {-1, -1, -1, 0, 0, 1, 1, 1};
                 int[] directionsY = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -112,7 +116,8 @@ public class Model {
         while (true) {
             x += directionX;
             y += directionY;
-            if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE || board[x][y] == 0 || board[x][y] == BLACK_HOLE) break;
+            if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE
+                    || board[x][y] == EMPTY_DISC || board[x][y] == BLACK_HOLE) break;
             if (board[x][y] == playerDisc) return true;
         }
         return false;
@@ -134,7 +139,7 @@ public class Model {
 
         int[][] boardCopy = Arrays.stream(board).map(int[]::clone).toArray(int[][]::new);;
         Set<Move> moves = getPossibleMoves(currentPlayer);
-        moves.forEach((move) -> boardCopy[move.getRow()][move.getCol()] = 3);
+        moves.forEach((move) -> boardCopy[move.getRow()][move.getCol()] = POSSIBLE_MOVE);
         return boardCopy;
     }
 
