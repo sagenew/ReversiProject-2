@@ -15,26 +15,21 @@ public class Controller {
     ConsoleView view;
     Player player1;
     Player player2;
-    String s;
-    Move whiteMove;
 
     public Controller() {
         scanner = new Scanner(System.in);
         model = new Model();
         view = new ConsoleView();
-        s = "";
     }
 
     public void init() {
         initBlackHolePos();
         initPlayers();
-
         startGameLoop();
     }
 
     private void initBlackHolePos() {
         String blackHolePos = scanner.nextLine();
-        s += blackHolePos;
         Move blackHole = stringToMove(blackHolePos);
         model.setBlackHole(blackHole);
     }
@@ -43,9 +38,8 @@ public class Controller {
         PlayerColour player1Colour;
         PlayerColour player2Colour;
         String player1ColourString = scanner.nextLine();
-        s += " " + player1ColourString;
         if(player1ColourString.equals("white")) {
-            whiteMove = stringToMove(scanner.nextLine());
+            model.placeDisc(stringToMove(scanner.nextLine()));
             player1Colour = PlayerColour.WHITE;
             player2Colour = PlayerColour.BLACK;
         }
@@ -65,11 +59,7 @@ public class Controller {
                 nextMove = player1.getNextMove();
                 System.out.println(moveToString(nextMove));
             } else {
-                if(whiteMove != null) {
-                    nextMove = whiteMove;
-                    whiteMove = null;
-                }
-                else nextMove = player2.getNextMove();
+                nextMove = player2.getNextMove();
             }
             model.placeDisc(nextMove);
         }
