@@ -17,7 +17,7 @@ public class AIPlayer implements Player {
 
     @Override
     public Move getNextMove() {
-        return getRandomPossibleMove(playerColour);
+        return getRandomPossibleMove();
     }
 
     @Override
@@ -25,10 +25,16 @@ public class AIPlayer implements Player {
         return playerColour;
     }
 
-    private Move getRandomPossibleMove(PlayerColour currentPlayer) {
+    private Move getRandomPossibleMove() {
         ArrayList<Move> movesList = new ArrayList<>(model.getPossibleMoves(getPlayerColour()));
         if (movesList.isEmpty()) return null;
         int randomIndex = (int)(Math.random() * movesList.toArray().length);
         return movesList.get(randomIndex);
+    }
+
+    @Override
+    public boolean hasPossibleMoves() {
+        ArrayList<Move> movesList = new ArrayList<>(model.getPossibleMoves(getPlayerColour()));
+        return !movesList.isEmpty();
     }
 }

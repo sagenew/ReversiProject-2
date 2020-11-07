@@ -4,6 +4,8 @@ import com.gamedev.player.Player;
 import com.gamedev.model.Model;
 import com.gamedev.model.entity.Move;
 import com.gamedev.model.entity.PlayerColour;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserPlayer implements Player {
@@ -27,5 +29,11 @@ public class UserPlayer implements Player {
     @Override
     public PlayerColour getPlayerColour() {
         return playerColour;
+    }
+
+    @Override
+    public boolean hasPossibleMoves() {
+        ArrayList<Move> movesList = new ArrayList<>(model.getPossibleMoves(getPlayerColour()));
+        return !movesList.isEmpty();
     }
 }
