@@ -1,5 +1,7 @@
 package com.gamedev.model.entity;
 
+import java.util.Objects;
+
 public class Move {
     int row;
     int col;
@@ -19,5 +21,19 @@ public class Move {
 
     public String toString () {
         return String.format("[%s, %s]", row, col);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Move move = (Move) o;
+        return row == move.row &&
+                col == move.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
     }
 }
